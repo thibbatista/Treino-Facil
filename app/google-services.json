@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "704378086016",
+    "project_id": "treino-facil-38873",
+    "storage_bucket": "treino-facil-38873.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:704378086016:android:3bf0ddf5e90e055431fc65",
+        "android_client_info": {
+          "package_name": "com.example.treinofacil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "704378086016-27b95l9qm0hu8q93pptlb62c38a5re2k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjkM31gSlLFJHP8Ipug2j4H1IyuzxtMQc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "704378086016-27b95l9qm0hu8q93pptlb62c38a5re2k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

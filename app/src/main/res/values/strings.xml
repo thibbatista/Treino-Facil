@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Treino facil</string>
+
+    <string name="titulo_form_cadastro">Cadastre-se</string>
+    <string name="titulo_form_login">Login do Usuário</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_senha">Senha</string>
+    <string name="botaoCadastrar">cadastrar</string>
+    <string name="botaologin">entrar</string>
+    <string name="tv_cadastre_se">Não tem conta? cadastre-se</string>
+
+
+    <string name="label_new_task">Criar Treino</string>
+    <string name="label_title">Título</string>
+    <string name="label_descricao">Descrição</string>
+    <string name="label_date">Data</string>
+    <string name="label_hour">Hora</string>
+    <string name="label_cancel">Cancelar</string>
+    <string name="label_tasks">Treino</string>
+    <string name="label_description_new_task">Nova treino</string>
+    <string name="label_edit">Editar</string>
+    <string name="label_delete">Deletar</string>
+    <string name="label_you_dont_have_tasks">Ops! Você não possui nenhum treino cadastrado</string>
+
+
+
+</resources>
