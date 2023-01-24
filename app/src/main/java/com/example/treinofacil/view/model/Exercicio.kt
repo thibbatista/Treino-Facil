@@ -1,8 +1,13 @@
 package com.example.treinofacil.view.model
 
-data class Exercicio (
+import com.google.firebase.firestore.DocumentId
+
+data class Exercicio(
 
     val nome: String? = null,
     val image: String? = null,
-    val observacao: String? = null
-    )
+    val observacao: String? = null,
+
+    @DocumentId
+    val documentId: String? = null
+)

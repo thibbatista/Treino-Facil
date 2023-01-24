@@ -40,6 +40,16 @@
         app:layout_constraintTop_toBottomOf="@id/titulo"
         app:layout_constraintStart_toEndOf="@id/image"/>
 
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:checked="false"
+        app:layout_constraintEnd_toEndOf="parent"
+
+
+       />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

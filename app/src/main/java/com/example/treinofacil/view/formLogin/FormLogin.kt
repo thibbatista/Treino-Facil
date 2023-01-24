@@ -4,12 +4,8 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.treinofacil.R
-import com.example.treinofacil.databinding.ActivityFormCadastroBinding
 import com.example.treinofacil.databinding.ActivityFormLoginBinding
 import com.example.treinofacil.view.formCadastro.FormCadastro
-import com.example.treinofacil.view.treinos.LIstExercicios
-import com.example.treinofacil.view.treinos.Treino
 import com.example.treinofacil.view.ui.ListTreino
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseNetworkException
