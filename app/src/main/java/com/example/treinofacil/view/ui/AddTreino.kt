@@ -1,9 +1,8 @@
 package com.example.treinofacil.view.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.example.treinofacil.R
+import androidx.appcompat.app.AppCompatActivity
 import com.example.treinofacil.databinding.ActivityAddTreinoBinding
 import com.example.treinofacil.view.extensions.format
 import com.example.treinofacil.view.extensions.text
@@ -12,11 +11,11 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.type.DateTime
-import java.sql.Timestamp
+import java.text.SimpleDateFormat
 import java.util.*
 
 class AddTreino : AppCompatActivity() {
+
 
     private lateinit var binding: ActivityAddTreinoBinding
     private val db = FirebaseFirestore.getInstance()
@@ -63,17 +62,24 @@ class AddTreino : AppCompatActivity() {
         binding.btnNewTask.setOnClickListener {
 
 
+            val formatter = SimpleDateFormat("dd/M/yyyy hh:mm")
+
+            val dateInString = "${binding.tilDate.text} ${binding.tilHour.text}"
+            val date: Date = formatter.parse(dateInString) as Date
+            println("DATA $date")
+
 
             val usuariosMap = hashMapOf(
                 "nome" to "${binding.tilTitle.text}",
                 "descricao" to "${binding.tilDescricao.text}",
-                "data" to FieldValue.serverTimestamp()
+                "data" to date
             )
 
             db.collection("users")
                 .add(usuariosMap)
                 .addOnSuccessListener { documentReference ->
                     Log.d("db", "DocumentSnapshot added with ID: ${documentReference.id}")
+
                     finish()
                 }
                 .addOnFailureListener { e ->

@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.treinofacil.R
 import com.example.treinofacil.databinding.ActivityListTreinoBinding
@@ -13,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class ListTreino : AppCompatActivity() {
 
+    private val liveData = MutableLiveData<List<Treino>>()
     private lateinit var binding: ActivityListTreinoBinding
     private lateinit var treinoList: ArrayList<Treino>
     private lateinit var recyclerView: RecyclerView
@@ -27,20 +31,14 @@ class ListTreino : AppCompatActivity() {
 
 
         recyclerView = findViewById(R.id.rv_treino)
-
-        //recyclerView.layoutManager = LinearLayoutManager(this)
         treinoList = arrayListOf()
 
         addtreinoAdapter = AddtreinoAdapter(treinoList)
 
-        recyclerView.adapter = addtreinoAdapter
+        //recyclerView.adapter = addtreinoAdapter
 
-        addtreinoAdapter.onItemClick = {
 
-            val intent = Intent(this, ListExercicio::class.java)
-            intent.putExtra("treino", it)
-            startActivity(intent)
-        }
+
 
 
         //updateList()
@@ -63,20 +61,28 @@ class ListTreino : AppCompatActivity() {
                     val treino: Treino? = document.toObject(Treino::class.java)
                     if (treino != null) {
                         treinoList.add(treino)
+
+                       liveData.postValue(treinoList)
+                        println("POST VALUE  LISTA CHEIA= ${liveData.value}")
+
                         updateList()
 //                        val id: String = document.id
 //                        println(id)
                     }
                 }
                 recyclerView.adapter = AddtreinoAdapter(treinoList)
-//                addtreinoAdapter.onItemClick = {
-//                    println("INVOKE position ${it}")
-//                }
+
+                addtreinoAdapter.onItemClick = {
+
+                    val intent = Intent(this,AddTreino::class.java)
+                    intent.putExtra("treino", it)
+                    startActivity(intent)
+                }
+//
             }
             .addOnFailureListener { exception ->
                 Log.w("db", "Error getting documents.", exception)
             }
-
     }
 
     private fun insertListeners() {
@@ -84,7 +90,6 @@ class ListTreino : AppCompatActivity() {
             val intent = (Intent(this, AddTreino::class.java))
             startActivity(intent)
         }
-
     }
 
     private fun updateList() {
@@ -98,9 +103,21 @@ class ListTreino : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         treinoList.clear()
+        liveData.postValue(treinoList)
+        println("POST VALUE  LISTA VAZIA= ${liveData.value}")
+
         getDb()
-
-
     }
+}
 
+class SingleLiveData<T> : MutableLiveData<T?>() {
+
+    override fun observe(owner: LifecycleOwner, observer: Observer<in T?>) {
+        super.observe(owner, Observer { t ->
+            if (t != null) {
+                observer.onChanged(t)
+                postValue(null)
+            }
+        })
+    }
 }
