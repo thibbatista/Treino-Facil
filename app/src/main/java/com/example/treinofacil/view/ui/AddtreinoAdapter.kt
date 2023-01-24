@@ -16,7 +16,7 @@ import java.util.*
 
 class AddtreinoAdapter( private val treinoList: List<Treino>) : RecyclerView.Adapter<TreinoViewHolder>()  {
 
-    var onItemClick : ((Int) -> Unit)? = null
+    var onItemClick : ((String) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TreinoViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemTreinoBinding.inflate(inflater, parent, false)
@@ -46,7 +46,7 @@ class AddtreinoAdapter( private val treinoList: List<Treino>) : RecyclerView.Ada
 
             println("DATAFORMATO= $data")
             Log.d("TESTE DE CLICK", "TESTE CLICK RECYCLER VIEW")
-            onItemClick?.invoke(position)
+            treinoList[position].documentId?.let { it1 -> onItemClick?.invoke(it1) }
 
         }
 

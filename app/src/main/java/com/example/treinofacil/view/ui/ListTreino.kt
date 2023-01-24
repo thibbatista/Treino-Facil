@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.treinofacil.R
 import com.example.treinofacil.databinding.ActivityListTreinoBinding
 import com.example.treinofacil.view.model.Treino
+import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ListTreino : AppCompatActivity() {
@@ -45,10 +46,10 @@ class ListTreino : AppCompatActivity() {
             binding.rvTreino.layoutManager = LinearLayoutManager(this)
             binding.rvTreino.adapter = addtreinoAdapter
 
-           addtreinoAdapter.onItemClick = {
+           addtreinoAdapter.onItemClick = { documentId ->
 
-               val intent = Intent(this, AddTreino::class.java)
-               intent.putExtra("treino", it)
+               val intent = Intent(this, ListExercicio::class.java)
+               intent.putExtra("treino", documentId)
                startActivity(intent)
            }
 
@@ -112,17 +113,5 @@ class ListTreino : AppCompatActivity() {
         println("POST VALUE  LISTA VAZIA= ${liveData.value}")
 
         getDb()
-    }
-}
-
-class SingleLiveData<T> : MutableLiveData<T?>() {
-
-    override fun observe(owner: LifecycleOwner, observer: Observer<in T?>) {
-        super.observe(owner, Observer { t ->
-            if (t != null) {
-                observer.onChanged(t)
-                postValue(null)
-            }
-        })
     }
 }
