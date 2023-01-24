@@ -8,17 +8,28 @@
     tools:context=".view.ui.LIstExercicios">
 
 
+    <Button
+        android:id="@+id/gravar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Gravar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_exercicio"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="7"
-        tools:listitem="@layout/exercicio"
-        android:orientation="vertical"/>
+        tools:listitem="@layout/exercicio" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

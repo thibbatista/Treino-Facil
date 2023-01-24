@@ -57,14 +57,39 @@ class LIstExercicios : AppCompatActivity() {
                         println("LISTA PARA GRAVAR NO FIRESTORE -> $listAddExercicios")
                     }
                 }else{
+                    //verifica se possui na lista e remove
                     listExerciciosAdapter.onItemId = {id->
                         listAddExercicios.remove(id)
                         println("LISTA PARA GRAVAR NO FIRESTORE -> $listAddExercicios")
                     }
-                    //verifica se possui na lista e remove
+                }
+            }
+        }
+
+
+        binding.gravar.setOnClickListener {
+
+            for (i in listAddExercicios){
+
+
+                val usuariosMap = hashMapOf(
+                    "exercicio" to i
+
+                )
+
+                if (documentId != null) {
+                    db.collection("users").document(documentId).collection("meusExercicios")
+                        .add(usuariosMap)
+                        .addOnSuccessListener { documentReference ->
+                            Log.d("db", "DocumentSnapshot added with ID: ${documentReference.id}")
+                        }
+                        .addOnFailureListener { e ->
+                            Log.w("db", "Error adding document", e)
+                        }
                 }
 
             }
+
 
         }
 
