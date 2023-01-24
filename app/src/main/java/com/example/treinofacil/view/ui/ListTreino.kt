@@ -8,6 +8,7 @@ import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.treinofacil.R
 import com.example.treinofacil.databinding.ActivityListTreinoBinding
@@ -19,7 +20,7 @@ class ListTreino : AppCompatActivity() {
     private val liveData = MutableLiveData<List<Treino>>()
     private lateinit var binding: ActivityListTreinoBinding
     private lateinit var treinoList: ArrayList<Treino>
-    private lateinit var recyclerView: RecyclerView
+   // private lateinit var recyclerView: RecyclerView
     private lateinit var addtreinoAdapter: AddtreinoAdapter
     private val db = FirebaseFirestore.getInstance()
 
@@ -30,24 +31,28 @@ class ListTreino : AppCompatActivity() {
 
 
 
-        recyclerView = findViewById(R.id.rv_treino)
+        //recyclerView = findViewById(R.id.rv_treino)
         treinoList = arrayListOf()
 
-        addtreinoAdapter = AddtreinoAdapter(treinoList)
-
-        //recyclerView.adapter = addtreinoAdapter
-
-
-
-
-
-        //updateList()
-        //getDb()
-
+        //addtreinoAdapter = AddtreinoAdapter(treinoList)
 
         insertListeners()
 
 
+       liveData.observe(this) {
+
+            addtreinoAdapter = AddtreinoAdapter(it)
+            binding.rvTreino.layoutManager = LinearLayoutManager(this)
+            binding.rvTreino.adapter = addtreinoAdapter
+
+           addtreinoAdapter.onItemClick = {
+
+               val intent = Intent(this, AddTreino::class.java)
+               intent.putExtra("treino", it)
+               startActivity(intent)
+           }
+
+        }
 
     }
 
@@ -70,14 +75,14 @@ class ListTreino : AppCompatActivity() {
 //                        println(id)
                     }
                 }
-                recyclerView.adapter = AddtreinoAdapter(treinoList)
-
-                addtreinoAdapter.onItemClick = {
-
-                    val intent = Intent(this,AddTreino::class.java)
-                    intent.putExtra("treino", it)
-                    startActivity(intent)
-                }
+//                recyclerView.adapter = AddtreinoAdapter(treinoList)
+//
+//                addtreinoAdapter.onItemClick = {
+//
+//                    val intent = Intent(this,AddTreino::class.java)
+//                    intent.putExtra("treino", it)
+//                    startActivity(intent)
+//                }
 //
             }
             .addOnFailureListener { exception ->
