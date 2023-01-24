@@ -73,7 +73,7 @@ class LIstExercicios : AppCompatActivity() {
 
 
                 val usuariosMap = hashMapOf(
-                    "exercicio" to i
+                    "nome" to i
 
                 )
 
@@ -82,15 +82,17 @@ class LIstExercicios : AppCompatActivity() {
                         .add(usuariosMap)
                         .addOnSuccessListener { documentReference ->
                             Log.d("db", "DocumentSnapshot added with ID: ${documentReference.id}")
+
+                            val intent = Intent(this, MeusExercicios::class.java)
+                            intent.putExtra("treino", documentId)
+                            startActivity(intent)
+                            finish()
                         }
                         .addOnFailureListener { e ->
                             Log.w("db", "Error adding document", e)
                         }
                 }
-
             }
-
-
         }
 
 

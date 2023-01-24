@@ -48,7 +48,7 @@ class ListTreino : AppCompatActivity() {
 
            addtreinoAdapter.onItemClick = { documentId ->
 
-               val intent = Intent(this, LIstExercicios::class.java)
+               val intent = Intent(this, MeusExercicios::class.java)
                intent.putExtra("treino", documentId)
                startActivity(intent)
            }
