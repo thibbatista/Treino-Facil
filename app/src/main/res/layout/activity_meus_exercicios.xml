@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         tools:itemCount="7"
-        tools:listitem="@layout/exercicio"
+        tools:listitem="@layout/item_card_exercicio"
         android:orientation="vertical"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

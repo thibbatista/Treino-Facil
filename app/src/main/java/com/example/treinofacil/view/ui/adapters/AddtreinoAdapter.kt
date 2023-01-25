@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import com.example.treinofacil.databinding.ItemCardTreinoBinding
 import com.example.treinofacil.databinding.ItemTreinoBinding
 import com.example.treinofacil.view.extensions.format
 import com.example.treinofacil.view.model.Treino
@@ -20,7 +21,7 @@ class AddtreinoAdapter( private val treinoList: List<Treino>) : RecyclerView.Ada
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TreinoViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemTreinoBinding.inflate(inflater, parent, false)
+        val binding = ItemCardTreinoBinding.inflate(inflater, parent, false)
         return TreinoViewHolder(binding)
     }
 
@@ -32,6 +33,8 @@ class AddtreinoAdapter( private val treinoList: List<Treino>) : RecyclerView.Ada
     override fun onBindViewHolder(holder: TreinoViewHolder, position: Int) {
         holder.nome.text = treinoList[position].nome
         holder.descricao.text = treinoList[position].descricao
+        val number = position + 1
+        holder.itemNumber.text = number.toString()
 
         val data = treinoList[position].data
 
@@ -56,11 +59,12 @@ class AddtreinoAdapter( private val treinoList: List<Treino>) : RecyclerView.Ada
 }
 
 
-class TreinoViewHolder(binding: ItemTreinoBinding) : RecyclerView.ViewHolder(binding.root) {
+class TreinoViewHolder(binding: ItemCardTreinoBinding) : RecyclerView.ViewHolder(binding.root) {
 
     val nome = binding.tvTitle
     val descricao = binding.tvDescricao
     val data = binding.tvDate
+    val itemNumber = binding.number
 
 
 

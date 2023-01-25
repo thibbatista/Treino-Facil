@@ -10,6 +10,7 @@ import com.example.treinofacil.databinding.ActivityListExerciciosBinding
 import com.example.treinofacil.databinding.ActivityMeusExerciciosBinding
 import com.example.treinofacil.view.model.Exercicio
 import com.example.treinofacil.view.treinos.ListExerciciosAdapter
+import com.example.treinofacil.view.ui.adapters.MeusExerciciosAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -20,7 +21,7 @@ class MeusExercicios : AppCompatActivity() {
 
     //private lateinit var recyclerView : RecyclerView
     private lateinit var exercicioList: ArrayList<Exercicio>
-    private lateinit var listExerciciosAdapter: ListExerciciosAdapter
+    private lateinit var meusExerciciosAdapter: MeusExerciciosAdapter
     private val db = FirebaseFirestore.getInstance()
     private val listAddExercicios = ArrayList<Exercicio>()
     private val userId = FirebaseAuth.getInstance().currentUser
@@ -42,9 +43,11 @@ class MeusExercicios : AppCompatActivity() {
 
         liveData.observe(this) {
 
-            listExerciciosAdapter = ListExerciciosAdapter(it)
+            meusExerciciosAdapter = MeusExerciciosAdapter(it)
+           // listExerciciosAdapter = ListExerciciosAdapter(it)
             binding.rvMeusExercicios.layoutManager = LinearLayoutManager(this)
-            binding.rvMeusExercicios.adapter = listExerciciosAdapter
+            binding.rvMeusExercicios.adapter = meusExerciciosAdapter
+           // binding.rvMeusExercicios.adapter = listExerciciosAdapter
 
         }
 

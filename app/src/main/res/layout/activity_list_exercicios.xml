@@ -30,6 +30,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="7"
-        tools:listitem="@layout/exercicio" />
+        tools:listitem="@layout/item_card_exercicios_check" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
