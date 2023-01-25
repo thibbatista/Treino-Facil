@@ -10,6 +10,7 @@ import com.example.treinofacil.databinding.ActivityListExerciciosBinding
 import com.example.treinofacil.databinding.ActivityMeusExerciciosBinding
 import com.example.treinofacil.view.model.Exercicio
 import com.example.treinofacil.view.treinos.ListExerciciosAdapter
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MeusExercicios : AppCompatActivity() {
@@ -22,6 +23,8 @@ class MeusExercicios : AppCompatActivity() {
     private lateinit var listExerciciosAdapter: ListExerciciosAdapter
     private val db = FirebaseFirestore.getInstance()
     private val listAddExercicios = ArrayList<Exercicio>()
+    private val userId = FirebaseAuth.getInstance().currentUser
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,42 +53,44 @@ class MeusExercicios : AppCompatActivity() {
 
 
         if (documentId != null) {
-            db.collection("users").document(documentId).collection("meusExercicios")
-                .get()
-                .addOnSuccessListener { result ->
-                    for (document in result) {
-                        Log.d("db exercicios", "${document.id} => ${document.data}")
-                        //val data = document.data
-                        for (d in document.data) {
-                            println("FOR DATA -> ${d.value}")
-                            val id = d.value.toString()
+            userId?.let {
+                db.collection("users").document(it.uid).collection("treinos").document(documentId).collection("exercicios")
+                    .get()
+                    .addOnSuccessListener { result ->
+                        for (document in result) {
+                            Log.d("db exercicios", "${document.id} => ${document.data}")
+                            //val data = document.data
+                            for (d in document.data) {
+                                println("FOR DATA -> ${d.value}")
+                                val id = d.value.toString()
 
-                            //get exercicio atrave do nome de referencia
+                                //get exercicio atrave do nome de referencia
 
-                            db.collection("exercicios").document(id)
-                                .get()
-                                .addOnSuccessListener { result2 ->
-                                    //Log.d("db", "${document.id} => ${document.data}")
-                                    val exercicio: Exercicio? =
-                                        result2.toObject(Exercicio::class.java)
-                                    if (exercicio != null) {
-                                        exercicioList.add(exercicio)
-                                        liveData.postValue(exercicioList)
+                                db.collection("exercicios").document(id)
+                                    .get()
+                                    .addOnSuccessListener { result2 ->
+                                        //Log.d("db", "${document.id} => ${document.data}")
+                                        val exercicio: Exercicio? =
+                                            result2.toObject(Exercicio::class.java)
+                                        if (exercicio != null) {
+                                            exercicioList.add(exercicio)
+                                            liveData.postValue(exercicioList)
+                                        }
+                                        //recyclerView.adapter = ListExerciciosAdapter(exercicioList)
                                     }
-                                    //recyclerView.adapter = ListExerciciosAdapter(exercicioList)
-                                }
-                                .addOnFailureListener { exception ->
-                                    Log.w("db", "Error getting documents.", exception)
-                                }
+                                    .addOnFailureListener { exception ->
+                                        Log.w("db", "Error getting documents.", exception)
+                                    }
 
+
+                            }
 
                         }
-
                     }
-                }
-                .addOnFailureListener { exception ->
-                    Log.w("db", "Error getting documents.", exception)
-                }
+                    .addOnFailureListener { exception ->
+                        Log.w("db", "Error getting documents.", exception)
+                    }
+            }
         }
 
 

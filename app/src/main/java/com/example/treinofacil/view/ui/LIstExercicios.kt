@@ -14,6 +14,7 @@ import com.example.treinofacil.view.model.AddExercicio
 import com.example.treinofacil.view.model.Exercicio
 import com.example.treinofacil.view.model.Treino
 import com.example.treinofacil.view.treinos.ListExerciciosAdapter
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class LIstExercicios : AppCompatActivity() {
@@ -25,6 +26,8 @@ class LIstExercicios : AppCompatActivity() {
     private lateinit var listExerciciosAdapter: ListExerciciosAdapter
     private val db = FirebaseFirestore.getInstance()
     private val listAddExercicios = ArrayList<String>()
+    private val userId = FirebaseAuth.getInstance().currentUser
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,19 +81,21 @@ class LIstExercicios : AppCompatActivity() {
                 )
 
                 if (documentId != null) {
-                    db.collection("users").document(documentId).collection("meusExercicios")
-                        .add(usuariosMap)
-                        .addOnSuccessListener { documentReference ->
-                            Log.d("db", "DocumentSnapshot added with ID: ${documentReference.id}")
+                    userId?.let { it1 ->
+                        db.collection("users").document(it1.uid).collection("treinos").document(documentId).collection("exercicios")
+                            .add(usuariosMap)
+                            .addOnSuccessListener { documentReference ->
+                                Log.d("db", "DocumentSnapshot added with ID: ${documentReference.id}")
 
-                            val intent = Intent(this, MeusExercicios::class.java)
-                            intent.putExtra("treino", documentId)
-                            startActivity(intent)
-                            finish()
-                        }
-                        .addOnFailureListener { e ->
-                            Log.w("db", "Error adding document", e)
-                        }
+                                val intent = Intent(this, MeusExercicios::class.java)
+                                intent.putExtra("treino", documentId)
+                                startActivity(intent)
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w("db", "Error adding document", e)
+                            }
+                    }
                 }
             }
         }

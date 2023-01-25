@@ -9,6 +9,7 @@ import com.example.treinofacil.view.extensions.text
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
@@ -19,6 +20,7 @@ class AddTreino : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddTreinoBinding
     private val db = FirebaseFirestore.getInstance()
+    private val userId = FirebaseAuth.getInstance().currentUser
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddTreinoBinding.inflate(layoutInflater)
@@ -46,7 +48,8 @@ class AddTreino : AppCompatActivity() {
                 .build()
 
             timePicker.addOnPositiveButtonClickListener {
-                val minute = if (timePicker.minute in 0..9) "0${timePicker.minute}" else timePicker.minute
+                val minute =
+                    if (timePicker.minute in 0..9) "0${timePicker.minute}" else timePicker.minute
                 val hour = if (timePicker.hour in 0..9) "0${timePicker.hour}" else timePicker.hour
 
                 binding.tilHour.text = "$hour:$minute"
@@ -75,16 +78,18 @@ class AddTreino : AppCompatActivity() {
                 "data" to date
             )
 
-            db.collection("users")
-                .add(usuariosMap)
-                .addOnSuccessListener { documentReference ->
-                    Log.d("db", "DocumentSnapshot added with ID: ${documentReference.id}")
+            userId?.let { it1 ->
+                db.collection("users").document(it1.uid).collection("treinos")
+                    .add(usuariosMap)
+                    .addOnSuccessListener { documentReference ->
+                        Log.d("db", "DocumentSnapshot added with ID: ${documentReference.id}")
 
-                    finish()
-                }
-                .addOnFailureListener { e ->
-                    Log.w("db", "Error adding document", e)
-                }
+                        finish()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("db", "Error adding document", e)
+                    }
+            }
         }
     }
 

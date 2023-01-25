@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".view.treinos.Treino">
 
+
+
     <Button
         android:id="@+id/deslogar"
         android:layout_width="wrap_content"

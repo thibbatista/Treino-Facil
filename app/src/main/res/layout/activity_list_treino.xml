@@ -6,20 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".view.ui.LIstExercicios">
 
+    <include layout="@layout/tollbar"
+        />
+
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="@string/label_tasks"
+        android:text="Meus treinos"
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-        android:id="@+id/include_empty"
-        layout="@layout/empty_state" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_treino"

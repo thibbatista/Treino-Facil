@@ -1,10 +1,12 @@
 package com.example.treinofacil.view.formCadastro
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.treinofacil.R
 import com.example.treinofacil.databinding.ActivityFormCadastroBinding
+import com.example.treinofacil.view.formLogin.FormLogin
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
@@ -33,12 +35,21 @@ class FormCadastro : AppCompatActivity() {
                 snackbar.show()
             }else{
                 auth.createUserWithEmailAndPassword(email,senha).addOnCompleteListener{ cadastro ->
-                    if (cadastro.isSuccessful){
-                        val snackbar =  Snackbar.make(view, "Cadastro realizado com sucesso!", Snackbar.LENGTH_SHORT)
+                    if (cadastro.isSuccessful) {
+                        val snackbar = Snackbar.make(
+                            view,
+                            "Cadastro realizado com sucesso!",
+                            Snackbar.LENGTH_SHORT
+                        )
                         snackbar.setBackgroundTint(Color.BLUE)
                         snackbar.show()
                         binding.editEmail.setText("")
                         binding.editSenha.setText("")
+
+                        val intent = Intent(this, FormLogin::class.java)
+                        startActivity(intent)
+                        finish()
+
                     }
                 }.addOnFailureListener{ exception ->
 
