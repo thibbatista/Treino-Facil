@@ -6,31 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".view.ui.MeusExercicios">
 
-
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="@string/label_exercicio"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_meusExercicios"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/custom_toolbar"
         tools:itemCount="7"
-        tools:listitem="@layout/item_card_exercicio"
-        android:orientation="vertical"/>
+        tools:listitem="@layout/item_card_exercicio" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addExercicio"
@@ -41,6 +29,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add" />
+
+    <include
+        android:id="@+id/custom_toolbar"
+        layout="@layout/custon_toolbar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

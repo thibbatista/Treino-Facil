@@ -4,12 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="24dp"
-
     tools:context=".view.ui.LIstExercicios">
-
-
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_exercicio"
@@ -20,7 +15,7 @@
         app:layout_constraintBottom_toTopOf="@id/btn_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/custom_toolbar"
         tools:itemCount="7"
         tools:listitem="@layout/item_card_exercicios_check" />
 
@@ -33,11 +28,11 @@
         android:text="@string/label_cancel"
         android:textAllCaps="false"
 
-      app:layout_constraintBottom_toTopOf="@id/btn_gravar"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_gravar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
 
-         />
+        />
 
 
     <com.google.android.material.button.MaterialButton
@@ -45,7 +40,7 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-       android:layout_margin="16dp"
+        android:layout_margin="16dp"
         android:text="Gravar treino"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -53,5 +48,10 @@
         app:layout_constraintStart_toStartOf="parent"
 
         />
+
+
+    <include
+        android:id="@+id/custom_toolbar"
+        layout="@layout/custon_toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

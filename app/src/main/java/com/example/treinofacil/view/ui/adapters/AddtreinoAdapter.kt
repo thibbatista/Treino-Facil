@@ -1,23 +1,18 @@
 package com.example.treinofacil.view.ui
 
 import android.icu.text.SimpleDateFormat
-import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.treinofacil.databinding.ItemCardTreinoBinding
-import com.example.treinofacil.databinding.ItemTreinoBinding
-import com.example.treinofacil.view.extensions.format
 import com.example.treinofacil.view.model.Treino
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
-class AddtreinoAdapter( private val treinoList: List<Treino>) : RecyclerView.Adapter<TreinoViewHolder>()  {
+class AddtreinoAdapter(private val treinoList: List<Treino>) :
+    RecyclerView.Adapter<TreinoViewHolder>() {
 
-    var onItemClick : ((String) -> Unit)? = null
+    var onItemClick: ((String) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TreinoViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -65,7 +60,6 @@ class TreinoViewHolder(binding: ItemCardTreinoBinding) : RecyclerView.ViewHolder
     val descricao = binding.tvDescricao
     val data = binding.tvDate
     val itemNumber = binding.number
-
 
 
 }

@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".view.ui.LIstExercicios">
 
-    <include layout="@layout/custon_toolbar"
-        android:id="@+id/custom_toolbar"/>
+    <include
+        android:id="@+id/custom_toolbar"
+        layout="@layout/custon_toolbar" />
 
 
     <androidx.recyclerview.widget.RecyclerView

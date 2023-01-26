@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.treinofacil.R
 import com.example.treinofacil.databinding.ActivityListExerciciosBinding
 import com.example.treinofacil.databinding.ActivityListTreinoBinding
+import com.example.treinofacil.view.formLogin.FormLogin
 import com.example.treinofacil.view.model.AddExercicio
 import com.example.treinofacil.view.model.Exercicio
 import com.example.treinofacil.view.model.Treino
@@ -27,6 +28,7 @@ class LIstExercicios : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
     private val listAddExercicios = ArrayList<String>()
     private val userId = FirebaseAuth.getInstance().currentUser
+    private val auth = FirebaseAuth.getInstance()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +69,19 @@ class LIstExercicios : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+
+
+        binding.customToolbar.tvToolbar.text = "todos exercicios"
+
+        binding.customToolbar.btnLogout.setOnClickListener {
+
+            auth.signOut()
+            val intent = Intent(this, FormLogin::class.java)
+            startActivity(intent)
+            finish()
+            true
         }
 
 

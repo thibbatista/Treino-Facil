@@ -1,11 +1,13 @@
 package com.example.treinofacil.view.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.treinofacil.databinding.ActivityAddTreinoBinding
 import com.example.treinofacil.view.extensions.format
 import com.example.treinofacil.view.extensions.text
+import com.example.treinofacil.view.formLogin.FormLogin
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -21,6 +23,8 @@ class AddTreino : AppCompatActivity() {
     private lateinit var binding: ActivityAddTreinoBinding
     private val db = FirebaseFirestore.getInstance()
     private val userId = FirebaseAuth.getInstance().currentUser
+    private val auth = FirebaseAuth.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddTreinoBinding.inflate(layoutInflater)
@@ -60,6 +64,18 @@ class AddTreino : AppCompatActivity() {
 
         binding.btnCancel.setOnClickListener {
             finish()
+        }
+
+
+        binding.customToolbar.tvToolbar.text = "adicione um treino"
+
+        binding.customToolbar.btnLogout.setOnClickListener {
+
+            auth.signOut()
+            val intent = Intent(this, FormLogin::class.java)
+            startActivity(intent)
+            finish()
+            true
         }
 
         binding.btnNewTask.setOnClickListener {

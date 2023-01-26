@@ -26,7 +26,8 @@ class ListTreino : AppCompatActivity() {
     private val liveData = MutableLiveData<List<Treino>>()
     private lateinit var binding: ActivityListTreinoBinding
     private lateinit var treinoList: ArrayList<Treino>
-   // private lateinit var recyclerView: RecyclerView
+
+    // private lateinit var recyclerView: RecyclerView
     private lateinit var addtreinoAdapter: AddtreinoAdapter
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
@@ -62,11 +63,9 @@ class ListTreino : AppCompatActivity() {
 //        supportActionBar?.setDisplayShowTitleEnabled(false)
 //        toolbar.title = ""
         //setSupportActionBar(findViewById(R.id.toolbar))
-       // supportActionBar?.setDisplayShowTitleEnabled(false)
+        // supportActionBar?.setDisplayShowTitleEnabled(false)
         //setSupportActionBar(toolbar)
         //toolbar.title = "My New Title"
-
-
 
 
         //recyclerView = findViewById(R.id.rv_treino)
@@ -77,23 +76,23 @@ class ListTreino : AppCompatActivity() {
         insertListeners()
 
 
-       liveData.observe(this) {
+        liveData.observe(this) {
 
             addtreinoAdapter = AddtreinoAdapter(it)
             binding.rvTreino.layoutManager = LinearLayoutManager(this)
             binding.rvTreino.adapter = addtreinoAdapter
 
-           addtreinoAdapter.onItemClick = { documentId ->
+            addtreinoAdapter.onItemClick = { documentId ->
 
-               val intent = Intent(this, MeusExercicios::class.java)
-               intent.putExtra("treino", documentId)
-               startActivity(intent)
-           }
-
+                val intent = Intent(this, MeusExercicios::class.java)
+                intent.putExtra("treino", documentId)
+                startActivity(intent)
+            }
         }
 
+        binding.customToolbar.tvToolbar.text = "meus treinos"
 
-       binding.customToolbar.btnLogout.setOnClickListener {
+        binding.customToolbar.btnLogout.setOnClickListener {
 
             auth.signOut()
             val intent = Intent(this, FormLogin::class.java)
@@ -101,11 +100,10 @@ class ListTreino : AppCompatActivity() {
             finish()
             true
         }
-
     }
 
 
-    private fun getDb(){
+    private fun getDb() {
 
         userId?.let {
             db.collection("users").document(it.uid).collection("treinos")
@@ -121,19 +119,19 @@ class ListTreino : AppCompatActivity() {
                             println("POST VALUE  LISTA CHEIA= ${liveData.value}")
 
                             // updateList()
-    //                        val id: String = document.id
-    //                        println(id)
+                            //                        val id: String = document.id
+                            //                        println(id)
                         }
                     }
-    //                recyclerView.adapter = AddtreinoAdapter(treinoList)
-    //
-    //                addtreinoAdapter.onItemClick = {
-    //
-    //                    val intent = Intent(this,AddTreino::class.java)
-    //                    intent.putExtra("treino", it)
-    //                    startActivity(intent)
-    //                }
-    //
+                    //                recyclerView.adapter = AddtreinoAdapter(treinoList)
+                    //
+                    //                addtreinoAdapter.onItemClick = {
+                    //
+                    //                    val intent = Intent(this,AddTreino::class.java)
+                    //                    intent.putExtra("treino", it)
+                    //                    startActivity(intent)
+                    //                }
+                    //
                 }
                 .addOnFailureListener { exception ->
                     Log.w("db", "Error getting documents.", exception)

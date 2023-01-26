@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.treinofacil.databinding.ActivityListExerciciosBinding
 import com.example.treinofacil.databinding.ActivityMeusExerciciosBinding
+import com.example.treinofacil.view.formLogin.FormLogin
 import com.example.treinofacil.view.model.Exercicio
 import com.example.treinofacil.view.treinos.ListExerciciosAdapter
 import com.example.treinofacil.view.ui.adapters.MeusExerciciosAdapter
@@ -25,6 +26,7 @@ class MeusExercicios : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
     private val listAddExercicios = ArrayList<Exercicio>()
     private val userId = FirebaseAuth.getInstance().currentUser
+    private val auth = FirebaseAuth.getInstance()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +52,20 @@ class MeusExercicios : AppCompatActivity() {
            // binding.rvMeusExercicios.adapter = listExerciciosAdapter
 
         }
+
+
+
+        binding.customToolbar.tvToolbar.text = "meus exercicios"
+
+        binding.customToolbar.btnLogout.setOnClickListener {
+
+            auth.signOut()
+            val intent = Intent(this, FormLogin::class.java)
+            startActivity(intent)
+            finish()
+            true
+        }
+
 
 
         exercicioList = arrayListOf()

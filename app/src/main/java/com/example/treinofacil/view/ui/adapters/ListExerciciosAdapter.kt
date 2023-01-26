@@ -7,17 +7,17 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.treinofacil.R
-import com.example.treinofacil.databinding.ExercicioBinding
 import com.example.treinofacil.databinding.ItemCardExerciciosCheckBinding
 import com.example.treinofacil.view.model.AddExercicio
 import com.example.treinofacil.view.model.Exercicio
 
-class ListExerciciosAdapter(private val exercicioList: List<Exercicio>) : RecyclerView.Adapter<MainViewHolder>() {
+class ListExerciciosAdapter(private val exercicioList: List<Exercicio>) :
+    RecyclerView.Adapter<MainViewHolder>() {
 
     private lateinit var addExercicio: AddExercicio
 
-    var onItemId : ((String) -> Unit)? = null
-    var onItemCheck : ((Boolean) -> Unit)? = null
+    var onItemId: ((String) -> Unit)? = null
+    var onItemCheck: ((Boolean) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -51,9 +51,11 @@ class ListExerciciosAdapter(private val exercicioList: List<Exercicio>) : Recycl
 
 }
 
-class MainViewHolder(binding: ItemCardExerciciosCheckBinding) : RecyclerView.ViewHolder(binding.root) {
+class MainViewHolder(binding: ItemCardExerciciosCheckBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
     val nome = binding.titulo
+
     //val image = binding.ivImage
     val checkBox = binding.checkbox
 
