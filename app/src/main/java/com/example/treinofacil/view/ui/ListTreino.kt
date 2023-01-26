@@ -23,7 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class ListTreino : AppCompatActivity() {
 
-    private val liveData = MutableLiveData<List<Treino>>()
+    private val liveData = MutableLiveData<ArrayList<Treino>>()
     private lateinit var binding: ActivityListTreinoBinding
     private lateinit var treinoList: ArrayList<Treino>
 
@@ -89,6 +89,8 @@ class ListTreino : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+
+
 
         binding.customToolbar.tvToolbar.text = "meus treinos"
 
