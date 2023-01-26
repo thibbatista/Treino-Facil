@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -30,33 +31,40 @@ class ListTreino : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
     private val userId = FirebaseAuth.getInstance().currentUser
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.top_app_bar, menu)
-        return true
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.logout -> {
-            auth.signOut()
-            val intent = Intent(this, FormLogin::class.java)
-            startActivity(intent)
-            finish()
-            true
-
-        }
-        else -> {
-            super.onOptionsItemSelected(item)
-        }
-    }
+//
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.top_app_bar, menu)
+//        return true
+//    }
+//
+//
+//    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+//        R.id.logout -> {
+//            auth.signOut()
+//            val intent = Intent(this, FormLogin::class.java)
+//            startActivity(intent)
+//            finish()
+//            true
+//
+//        }
+//        else -> {
+//            super.onOptionsItemSelected(item)
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityListTreinoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        setSupportActionBar(findViewById(R.id.toolbar))
+//
+//        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+//        setSupportActionBar(toolbar)
+//        supportActionBar?.setDisplayShowTitleEnabled(false)
+//        toolbar.title = ""
+        //setSupportActionBar(findViewById(R.id.toolbar))
+       // supportActionBar?.setDisplayShowTitleEnabled(false)
+        //setSupportActionBar(toolbar)
+        //toolbar.title = "My New Title"
 
 
 
@@ -84,7 +92,18 @@ class ListTreino : AppCompatActivity() {
 
         }
 
+
+       binding.customToolbar.btnLogout.setOnClickListener {
+
+            auth.signOut()
+            val intent = Intent(this, FormLogin::class.java)
+            startActivity(intent)
+            finish()
+            true
+        }
+
     }
+
 
     private fun getDb(){
 

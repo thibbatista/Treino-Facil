@@ -6,19 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".view.ui.LIstExercicios">
 
-    <include layout="@layout/tollbar"
-        />
-
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Meus treinos"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include layout="@layout/custon_toolbar"
+        android:id="@+id/custom_toolbar"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -28,10 +17,11 @@
         android:layout_marginTop="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/fab"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
+       app:layout_constraintTop_toBottomOf="@id/custom_toolbar"
         tools:itemCount="8"
         tools:listitem="@layout/item_card_treino"
         tools:visibility="gone" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

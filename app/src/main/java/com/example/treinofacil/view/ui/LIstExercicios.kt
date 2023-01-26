@@ -70,7 +70,7 @@ class LIstExercicios : AppCompatActivity() {
         }
 
 
-        binding.gravar.setOnClickListener {
+        binding.btnGravar.setOnClickListener {
 
             for (i in listAddExercicios){
 
@@ -98,6 +98,10 @@ class LIstExercicios : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+        binding.btnCancel.setOnClickListener {
+            finish()
         }
 
 
