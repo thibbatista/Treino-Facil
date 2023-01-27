@@ -19,11 +19,10 @@ class MeusExercicios : AppCompatActivity() {
     private val liveData = MutableLiveData<ArrayList<Exercicio>>()
     private lateinit var binding: ActivityMeusExerciciosBinding
 
-    //private lateinit var recyclerView : RecyclerView
-    private lateinit var exercicioList: ArrayList<Exercicio>
+
+    private  var exercicioList = ArrayList<Exercicio>()
     private lateinit var meusExerciciosAdapter: MeusExerciciosAdapter
     private val db = FirebaseFirestore.getInstance()
-    private val listAddExercicios = ArrayList<Exercicio>()
     private val userId = FirebaseAuth.getInstance().currentUser
     private val auth = FirebaseAuth.getInstance()
 
@@ -35,13 +34,12 @@ class MeusExercicios : AppCompatActivity() {
 
 
         //getExtras
-
         val extras = intent.extras
         val documentId = extras?.getString("treino")
         println("Saida documentID = $documentId")
 
 
-
+        //Observer, recebe Arraylist de exercicios
         liveData.observe(this) {
             meusExerciciosAdapter = MeusExerciciosAdapter(it)
             binding.rvMeusExercicios.layoutManager = LinearLayoutManager(this)
@@ -52,6 +50,7 @@ class MeusExercicios : AppCompatActivity() {
                 Log.d("onItemId", "ID -> $id")
 
 
+                //get lista de exercicios do usuario para compara com id da lista de exercicios geral
                 userId?.let { it1 ->
                     if (documentId != null) {
                         db.collection("users").document(it1.uid).collection("treinos")
@@ -65,8 +64,8 @@ class MeusExercicios : AppCompatActivity() {
                                         if (id == value) {
                                             Log.d("RemoveID", "id->${document.id}")
 
-                                            //Remove o document.id do firestore
 
+                                            //Remove o document.id do firestore
                                             db.collection("users").document(it1.uid)
                                                 .collection("treinos").document(documentId)
                                                 .collection("exercicios").document(document.id)
@@ -96,9 +95,11 @@ class MeusExercicios : AppCompatActivity() {
         }
 
 
-
+        //setText Toolbar
         binding.customToolbar.tvToolbar.text = "meus exercicios"
 
+
+        //signOut
         binding.customToolbar.btnLogout.setOnClickListener {
 
             auth.signOut()
@@ -109,10 +110,7 @@ class MeusExercicios : AppCompatActivity() {
         }
 
 
-
-        exercicioList = arrayListOf()
-
-
+        //get lista de exercicios do usuario e adiciona como objeto em exerciciosList em liveData
         if (documentId != null) {
             userId?.let {
                 db.collection("users").document(it.uid).collection("treinos")
@@ -121,27 +119,19 @@ class MeusExercicios : AppCompatActivity() {
                     .addOnSuccessListener { result ->
                         for (document in result) {
                             Log.d("db exercicios", "${document.id} => ${document.data}")
-                            //val data = document.data
                             for (d in document.data) {
-                                println("Document ID -> $d")
-                                println("FOR DATA -> ${d.value}")
                                 val id = d.value.toString()
 
                                 //get exercicio atraves do nome de referencia
-
                                 db.collection("exercicios").document(id)
                                     .get()
                                     .addOnSuccessListener { result2 ->
-                                        //Log.d("db", "${document.id} => ${document.data}")
                                         val exercicio: Exercicio? =
                                             result2.toObject(Exercicio::class.java)
                                         if (exercicio != null) {
                                             exercicioList.add(exercicio)
                                             liveData.postValue(exercicioList)
-
-
                                         }
-                                        //recyclerView.adapter = ListExerciciosAdapter(exercicioList)
                                     }
                                     .addOnFailureListener { exception ->
                                         Log.w("db", "Error getting documents.", exception)
@@ -153,18 +143,15 @@ class MeusExercicios : AppCompatActivity() {
                         Log.w("db", "Error getting documents.", exception)
                     }
             }
-
-
         }
 
 
-
+        // evento de click no botao adicionar exercicios, passa o id elemento treino para activity listExercicios
         binding.addExercicio.setOnClickListener {
             val intent = Intent(this, LIstExercicios::class.java)
             intent.putExtra("treino", documentId)
             startActivity(intent)
             finish()
         }
-
     }
 }

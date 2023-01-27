@@ -1,5 +1,6 @@
 package com.example.treinofacil.view.ui
 
+import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,8 +23,7 @@ class LIstExercicios : AppCompatActivity() {
 
     private val liveData = MutableLiveData<List<Exercicio>>()
     private lateinit var binding: ActivityListExerciciosBinding
-   //private lateinit var recyclerView : RecyclerView
-    private lateinit var exercicioList : ArrayList<Exercicio>
+    private  var exercicioList = ArrayList<Exercicio>()
     private lateinit var listExerciciosAdapter: ListExerciciosAdapter
     private val db = FirebaseFirestore.getInstance()
     private val listAddExercicios = ArrayList<String>()
@@ -38,45 +38,45 @@ class LIstExercicios : AppCompatActivity() {
 
 
         //getExtras
-
         val extras = intent.extras
         val documentId = extras?.getString("treino")
         println("Saida documentID = $documentId")
 
 
-
+        //Observer
         liveData.observe(this) {
 
+            //inicializa adapter e recycler
             listExerciciosAdapter = ListExerciciosAdapter(it)
             binding.rvExercicio.layoutManager = LinearLayoutManager(this)
             binding.rvExercicio.adapter = listExerciciosAdapter
 
+            //lambda get estado do checkBox
             listExerciciosAdapter.onItemCheck = { check ->
 
-
-
-                if (check){
+                if (check) {
                     //verifica se não possui na lista e adiciona
-                    listExerciciosAdapter.onItemId = {id->
+                    listExerciciosAdapter.onItemId = { id ->
+
+                        //armazena apenas a referencia id
                         listAddExercicios.add(id)
-                        println("LISTA PARA GRAVAR NO FIRESTORE -> $listAddExercicios")
                     }
-                }else{
+                } else {
                     //verifica se possui na lista e remove
-                    listExerciciosAdapter.onItemId = {id->
+                    listExerciciosAdapter.onItemId = { id ->
                         listAddExercicios.remove(id)
-                        println("LISTA PARA GRAVAR NO FIRESTORE -> $listAddExercicios")
                     }
                 }
             }
         }
 
 
-
+        // setText tollBar
         binding.customToolbar.tvToolbar.text = "todos exercicios"
 
-        binding.customToolbar.btnLogout.setOnClickListener {
 
+        //signOut
+        binding.customToolbar.btnLogout.setOnClickListener {
             auth.signOut()
             val intent = Intent(this, FormLogin::class.java)
             startActivity(intent)
@@ -85,27 +85,25 @@ class LIstExercicios : AppCompatActivity() {
         }
 
 
+        //grava no firestore na colecao exercicios do item treino do usuário
         binding.btnGravar.setOnClickListener {
 
-            for (i in listAddExercicios){
-
+            // grava apenas o id do exercicio ex: abdominal
+            for (i in listAddExercicios) {
 
                 val usuariosMap = hashMapOf(
-                    "nome" to i
-
-                )
+                    "nome" to i)
 
                 if (documentId != null) {
                     userId?.let { it1 ->
-                        db.collection("users").document(it1.uid).collection("treinos").document(documentId).collection("exercicios")
+                        db.collection("users").document(it1.uid).collection("treinos")
+                            .document(documentId).collection("exercicios")
                             .add(usuariosMap)
                             .addOnSuccessListener { documentReference ->
-                                Log.d("db", "DocumentSnapshot added with ID: ${documentReference.id}")
-
-                                val intent = Intent(this, MeusExercicios::class.java)
-                                intent.putExtra("treino", documentId)
-                                startActivity(intent)
-                                finish()
+                                Log.d(
+                                    "db",
+                                    "DocumentSnapshot added with ID: ${documentReference.id}"
+                                )
                             }
                             .addOnFailureListener { e ->
                                 Log.w("db", "Error adding document", e)
@@ -113,37 +111,37 @@ class LIstExercicios : AppCompatActivity() {
                     }
                 }
             }
+
+            val intent = Intent(this, MeusExercicios::class.java)
+            intent.putExtra("treino", documentId)
+            startActivity(intent)
+            finish()
         }
 
+        // btn cancel
         binding.btnCancel.setOnClickListener {
+            val intent = Intent(this, MeusExercicios::class.java)
+            intent.putExtra("treino", documentId)
+            startActivity(intent)
             finish()
         }
 
 
-//        recyclerView = findViewById(R.id.rv_exercicio)
-//        recyclerView.layoutManager = LinearLayoutManager(this)
-        exercicioList = arrayListOf()
-
-
+        // lista todos os exercicios geral
         db.collection("exercicios")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
                     Log.d("db", "${document.id} => ${document.data}")
-                    val exercicio : Exercicio? = document.toObject(Exercicio::class.java)
+                    val exercicio: Exercicio? = document.toObject(Exercicio::class.java)
                     if (exercicio != null) {
                         exercicioList.add(exercicio)
                         liveData.postValue(exercicioList)
                     }
                 }
-                //recyclerView.adapter = ListExerciciosAdapter(exercicioList)
             }
             .addOnFailureListener { exception ->
                 Log.w("db", "Error getting documents.", exception)
             }
-
-
-
-
     }
 }

@@ -31,8 +31,10 @@ class AddTreino : AppCompatActivity() {
         setContentView(binding.root)
 
         insertListeners()
+
     }
 
+    //evento de click e get textInput
     private fun insertListeners() {
         binding.tilDate.editText?.setOnClickListener {
             val datePicker = MaterialDatePicker.Builder.datePicker().build()
@@ -80,9 +82,8 @@ class AddTreino : AppCompatActivity() {
 
         binding.btnNewTask.setOnClickListener {
 
-
+            //get data e hora e converte em Date
             val formatter = SimpleDateFormat("dd/M/yyyy hh:mm")
-
             val dateInString = "${binding.tilDate.text} ${binding.tilHour.text}"
             val date: Date = formatter.parse(dateInString) as Date
             println("DATA $date")
@@ -94,6 +95,7 @@ class AddTreino : AppCompatActivity() {
                 "data" to date
             )
 
+            //grava no firestore
             userId?.let { it1 ->
                 db.collection("users").document(it1.uid).collection("treinos")
                     .add(usuariosMap)
