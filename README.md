@@ -4,6 +4,31 @@
 
 Aplicativo Android para gerenciar treinos de musculação.
 
+##Demostração
+
+Na tela principal no botão + para adicionar um novo treino
+
+![](https://github.com/thibbatista/firebase/blob/main/images/treino.jpg)
+
+Cadastre um treino
+
+![](https://github.com/thibbatista/firebase/blob/main/images/calendario.jpg)
+
+![](https://github.com/thibbatista/firebase/blob/main/images/horario.jpg)
+
+Toque sobre o treino cadastrado para exibir ou adicionar exercicios
+
+![](https://github.com/thibbatista/firebase/blob/main/images/treino%20adicionado.jpg)
+
+Toque botão + para adicionar um novo exercicios
+
+![](https://github.com/thibbatista/firebase/blob/main/images/meus%20exercicios%20vazia.jpg)
+
+Escolha os exercicios e os selecione
+
+![](https://github.com/thibbatista/firebase/blob/main/images/lista%20exercicios.jpg)
+
+![](https://github.com/thibbatista/firebase/blob/main/images/meus%20exercicios%20preenchida.jpg)
 
 
 ## Funcionalidades
