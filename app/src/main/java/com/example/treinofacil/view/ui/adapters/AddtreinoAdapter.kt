@@ -103,7 +103,7 @@ class TreinoViewHolder(binding: ItemCardTreinoBinding) : RecyclerView.ViewHolder
         if (userId != null) {
             db.collection("users").document(userId).collection("treinos").document(id)
                 .delete()
-                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
+                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted $id! ") }
                 .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
         }
 
