@@ -1,5 +1,6 @@
 package com.example.treinofacil.view.ui
 
+import android.content.ContentValues.TAG
 import android.icu.text.SimpleDateFormat
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.treinofacil.R
 import com.example.treinofacil.databinding.ItemCardTreinoBinding
 import com.example.treinofacil.view.model.Treino
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
 class AddtreinoAdapter(private val treinoList: ArrayList<Treino>) :
@@ -52,11 +55,12 @@ class AddtreinoAdapter(private val treinoList: ArrayList<Treino>) :
         }
 
         holder.ivMore.setOnClickListener {
-            holder.showPopup(holder.ivMore, position, treinoList, this)
-//            notifyItemRemoved(position)
-//            notifyItemRangeChanged(position, treinoList.size)
-//
-//            notifyDataSetChanged()
+            treinoList[position].documentId?.let { it1 ->
+                holder.showPopup(holder.ivMore, position, treinoList, this,
+                    it1
+                )
+            }
+
         }
     }
 }
@@ -70,15 +74,15 @@ class TreinoViewHolder(binding: ItemCardTreinoBinding) : RecyclerView.ViewHolder
     val ivMore = binding.ivMore
 
 
-    fun showPopup(view: View, position: Int, list: ArrayList<Treino>, adapter: AddtreinoAdapter) {
+    fun showPopup(view: View, position: Int, list: ArrayList<Treino>, adapter: AddtreinoAdapter,id: String) {
         val popup = PopupMenu(view.context, view)
         popup.inflate(R.menu.popup_menu)
         popup.setOnMenuItemClickListener { item: MenuItem? ->
 
             if (item != null) {
                 when (item.itemId) {
-                    R.id.action_edit -> list.removeAt(position)
-                    R.id.action_delete -> removedItem(position, list, adapter)
+                    R.id.action_edit -> println("Touch em Edit")
+                    R.id.action_delete -> removedItem(position, list, adapter, id)
                 }
             }
             true
@@ -86,11 +90,22 @@ class TreinoViewHolder(binding: ItemCardTreinoBinding) : RecyclerView.ViewHolder
         popup.show()
     }
 
-    fun removedItem(position: Int, list: ArrayList<Treino>, adapter: AddtreinoAdapter) {
+    private fun removedItem(position: Int, list: ArrayList<Treino>, adapter: AddtreinoAdapter, id:String) {
+
+        val db = FirebaseFirestore.getInstance()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+
         list.removeAt(position)
         adapter.notifyItemRemoved(position)
         adapter.notifyItemRangeChanged(position,list.size)
         adapter.notifyDataSetChanged()
+
+        if (userId != null) {
+            db.collection("users").document(userId).collection("treinos").document(id)
+                .delete()
+                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
+                .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
+        }
 
     }
 }

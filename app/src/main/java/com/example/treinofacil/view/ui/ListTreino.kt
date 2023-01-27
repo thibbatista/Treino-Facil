@@ -76,6 +76,8 @@ class ListTreino : AppCompatActivity() {
         insertListeners()
 
 
+
+
         liveData.observe(this) {
 
             addtreinoAdapter = AddtreinoAdapter(it)
