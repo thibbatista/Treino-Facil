@@ -55,6 +55,7 @@ Escolha os exercicios e os selecione
 * [Android Studio](https://developer.android.com/studio) 
 * [Gradle](https://gradle.org/) 
 * [XML](https://fontawesome.com/) 
+* [Firebase](https://firebase.google.com) 
 
 ## Ferramentas utilizadas
 
