@@ -8,6 +8,11 @@ Aplicativo Android para gerenciar treinos de musculação.
 
 ## Funcionalidades
 
+* Login 
+* Cadastro
+* Edição
+* Exlusão
+
 
 ## Tecnologias utilizadas
 
@@ -19,8 +24,9 @@ Aplicativo Android para gerenciar treinos de musculação.
 ## Ferramentas utilizadas
 
 * RecyclerView
-* Retrofit
-* ViewModel
+* Firebase
+* Firebase Auth
+* Firestore
 * Glide
 
-> Caso não esteja interessado no desenvolvimento, vá para a página [Releases](https://github.com/thibbatista/CardView-with-Nested-RecyclerView/releases) e baixe o compilado para executar.
+> Caso não esteja interessado no desenvolvimento, vá para a página [Releases](https://github.com/thibbatista/firebase/releases) e baixe o compilado para executar.
