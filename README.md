@@ -6,6 +6,16 @@ Aplicativo Android para gerenciar treinos de musculação.
 
 ##Demostração
 
+Faça o login
+
+![](https://github.com/thibbatista/firebase/blob/main/images/login.jpg)
+
+Ou cadastre-se
+
+![](https://github.com/thibbatista/firebase/blob/main/images/cadastro.jpg)
+
+![](https://github.com/thibbatista/firebase/blob/main/images/treino.jpg)
+
 Na tela principal no botão + para adicionar um novo treino
 
 ![](https://github.com/thibbatista/firebase/blob/main/images/treino.jpg)
