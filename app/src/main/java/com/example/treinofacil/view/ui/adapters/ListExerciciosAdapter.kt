@@ -27,16 +27,13 @@ class ListExerciciosAdapter(private val exercicioList: List<Exercicio>) :
 
     override fun getItemCount(): Int {
         return exercicioList.size
-
     }
+
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         holder.nome.text = exercicioList[position].nome.toString()
-        //holder.image.tag = exercicioList[position].image
 
         holder.bind(exercicioList[position])
-
-
 
         holder.checkBox.setOnCheckedChangeListener { compoundButton, b ->
             println("Check->$compoundButton, $b")
@@ -48,17 +45,13 @@ class ListExerciciosAdapter(private val exercicioList: List<Exercicio>) :
 
         }
     }
-
 }
 
 class MainViewHolder(binding: ItemCardExerciciosCheckBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     val nome = binding.titulo
-
-    //val image = binding.ivImage
     val checkBox = binding.checkbox
-
 
     private val itemImage = binding.ivImage
     fun bind(exercicio: Exercicio) {
@@ -71,7 +64,5 @@ class MainViewHolder(binding: ItemCardExerciciosCheckBinding) :
             .load(exercicio.image)
             .transition(DrawableTransitionOptions.withCrossFade(2000))
             .into(itemImage)
-
     }
-
 }

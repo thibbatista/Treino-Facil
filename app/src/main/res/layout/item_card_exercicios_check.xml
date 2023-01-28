@@ -35,11 +35,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="16dp"
-                android:text="Sample Story Title"
+                android:text="@string/titulo"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintEnd_toStartOf="@id/checkbox"
                 app:layout_constraintStart_toEndOf="@+id/cd_image"
                 app:layout_constraintTop_toTopOf="parent" />
 

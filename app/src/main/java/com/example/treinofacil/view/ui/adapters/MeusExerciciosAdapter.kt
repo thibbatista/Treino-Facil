@@ -1,7 +1,5 @@
 package com.example.treinofacil.view.ui.adapters
 
-import android.content.ContentValues
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -14,16 +12,12 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.treinofacil.R
 import com.example.treinofacil.databinding.ItemCardExercicioBinding
 import com.example.treinofacil.view.model.Exercicio
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 class MeusExerciciosAdapter(private val exercicioList: ArrayList<Exercicio>) :
     RecyclerView.Adapter<MainViewHolder>() {
 
-    //private lateinit var addExercicio: AddExercicio
 
-    var onItemId : ((String) -> Unit)? = null
-//    var onItemCheck : ((Boolean) -> Unit)? = null
+    var onItemId: ((String) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -33,35 +27,30 @@ class MeusExerciciosAdapter(private val exercicioList: ArrayList<Exercicio>) :
 
     override fun getItemCount(): Int {
         return exercicioList.size
-
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         holder.nome.text = exercicioList[position].nome.toString()
         holder.obs.text = exercicioList[position].observacao
-        // holder.image.tag = exercicioList[position].image
         holder.bind(exercicioList[position])
 
 
         holder.ivMore.setOnClickListener {
             exercicioList[position].documentId?.let { it1 ->
                 onItemId?.let { it2 ->
-                    holder.showPopup(holder.ivMore,position,
+                    holder.showPopup(
+                        holder.ivMore, position,
                         it1, exercicioList, this, it2
                     )
                 }
             }
         }
-
     }
-
 }
 
 class MainViewHolder(binding: ItemCardExercicioBinding) : RecyclerView.ViewHolder(binding.root) {
 
     val nome = binding.titulo
-
-    //val image = binding.ivImage
     val obs = binding.obs
     val ivMore = binding.ivMore
 
@@ -77,9 +66,7 @@ class MainViewHolder(binding: ItemCardExercicioBinding) : RecyclerView.ViewHolde
             .load(exercicio.image)
             .transition(DrawableTransitionOptions.withCrossFade(2000))
             .into(itemImage)
-
     }
-
 
     fun showPopup(
         view: View,
@@ -91,7 +78,6 @@ class MainViewHolder(binding: ItemCardExercicioBinding) : RecyclerView.ViewHolde
 
     ) {
 
-       // var onItemId: ((String) -> Unit)? = null
         val popup = PopupMenu(view.context, view)
         popup.inflate(R.menu.popup_menu)
         popup.setOnMenuItemClickListener { item: MenuItem? ->
@@ -103,7 +89,6 @@ class MainViewHolder(binding: ItemCardExercicioBinding) : RecyclerView.ViewHolde
                         onItemId.invoke(idExercicio)
                         removedItem(position, list, adapter)
                     }
-
                 }
             }
             true

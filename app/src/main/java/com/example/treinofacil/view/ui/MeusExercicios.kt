@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.treinofacil.R
 import com.example.treinofacil.databinding.ActivityMeusExerciciosBinding
 import com.example.treinofacil.view.formLogin.FormLogin
 import com.example.treinofacil.view.model.Exercicio
@@ -33,10 +34,16 @@ class MeusExercicios : AppCompatActivity() {
         setContentView(binding.root)
 
 
+
         //getExtras
         val extras = intent.extras
         val documentId = extras?.getString("treino")
         println("Saida documentID = $documentId")
+
+        if (documentId != null) {
+            getDb(documentId)
+            insertListeners(documentId)
+        }
 
 
         //Observer, recebe Arraylist de exercicios
@@ -49,68 +56,15 @@ class MeusExercicios : AppCompatActivity() {
             meusExerciciosAdapter.onItemId = { id ->
                 Log.d("onItemId", "ID -> $id")
 
-
-                //get lista de exercicios do usuario para compara com id da lista de exercicios geral
-                userId?.let { it1 ->
-                    if (documentId != null) {
-                        db.collection("users").document(it1.uid).collection("treinos")
-                            .document(documentId).collection("exercicios")
-                            .get()
-                            .addOnSuccessListener { result ->
-                                for (document in result) {
-                                    Log.d("List exercicios", "${document.id} => ${document.data}")
-                                    for (d in document.data) {
-                                        val value = d.value.toString()
-                                        if (id == value) {
-                                            Log.d("RemoveID", "id->${document.id}")
-
-
-                                            //Remove o document.id do firestore
-                                            db.collection("users").document(it1.uid)
-                                                .collection("treinos").document(documentId)
-                                                .collection("exercicios").document(document.id)
-                                                .delete()
-                                                .addOnSuccessListener {
-                                                    Log.d(
-                                                        ContentValues.TAG,
-                                                        "DocumentSnapshot successfully deleted $id! "
-                                                    )
-                                                }
-                                                .addOnFailureListener { e ->
-                                                    Log.w(
-                                                        ContentValues.TAG,
-                                                        "Error deleting document",
-                                                        e
-                                                    )
-                                                }
-                                        }
-                                    }
-                                }
-                            }
-
-                    }
-
+                if (documentId != null) {
+                    getUserExercicios(documentId,id)
                 }
             }
         }
+    }
 
-
-        //setText Toolbar
-        binding.customToolbar.tvToolbar.text = "meus exercicios"
-
-
-        //signOut
-        binding.customToolbar.btnLogout.setOnClickListener {
-
-            auth.signOut()
-            val intent = Intent(this, FormLogin::class.java)
-            startActivity(intent)
-            finish()
-            true
-        }
-
-
-        //get lista de exercicios do usuario e adiciona como objeto em exerciciosList em liveData
+    //get lista de exercicios do usuario e adiciona como objeto em exerciciosList em liveData
+    private fun getDb(documentId: String){
         if (documentId != null) {
             userId?.let {
                 db.collection("users").document(it.uid).collection("treinos")
@@ -144,7 +98,14 @@ class MeusExercicios : AppCompatActivity() {
                     }
             }
         }
+    }
 
+    //eventos de clique
+    private fun insertListeners(documentId: String){
+
+
+        //setText Toolbar
+        binding.customToolbar.tvToolbar.text = getString(R.string.meus_exercicios)
 
         // evento de click no botao adicionar exercicios, passa o id elemento treino para activity listExercicios
         binding.addExercicio.setOnClickListener {
@@ -153,5 +114,59 @@ class MeusExercicios : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        //signOut
+        binding.customToolbar.btnLogout.setOnClickListener {
+
+            auth.signOut()
+            val intent = Intent(this, FormLogin::class.java)
+            startActivity(intent)
+            finish()
+
+        }
     }
+
+
+    //get lista de exercicios do usuario para compara com id da lista de exercicios geral
+    private fun getUserExercicios (idTreino: String, idExercicio: String){
+        userId?.let { user ->
+            db.collection("users").document(user.uid).collection("treinos")
+                .document(idTreino).collection("exercicios")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        Log.d("List exercicios", "${document.id} => ${document.data}")
+                        for (d in document.data) {
+                            val value = d.value.toString()
+                            if (idExercicio == value) {
+                                Log.d("RemoveID", "id->${document.id}")
+                                removeItem(user.uid, document.id, idTreino)
+                            }
+                        }
+                    }
+                }
+        }
+    }
+
+    //Remove o document.id do firestore
+    private fun removeItem(idUsuario:String, idDocumento: String, idTreino:String){
+        db.collection("users").document(idUsuario)
+            .collection("treinos").document(idTreino)
+            .collection("exercicios").document(idDocumento)
+            .delete()
+            .addOnSuccessListener {
+                Log.d(
+                    ContentValues.TAG,
+                    "DocumentSnapshot successfully deleted!"
+                )
+            }
+            .addOnFailureListener { e ->
+                Log.w(
+                    ContentValues.TAG,
+                    "Error deleting document",
+                    e
+                )
+            }
+    }
+
 }

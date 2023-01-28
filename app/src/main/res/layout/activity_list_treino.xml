@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.ui.LIstExercicios">
 
-    <include
-        android:id="@+id/custom_toolbar"
-        layout="@layout/custon_toolbar" />
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_treino"
         android:layout_width="match_parent"
@@ -18,7 +13,7 @@
         android:layout_marginTop="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/fab"
-       app:layout_constraintTop_toBottomOf="@id/custom_toolbar"
+        app:layout_constraintTop_toBottomOf="@id/custom_toolbar"
         tools:itemCount="8"
         tools:listitem="@layout/item_card_treino"
         tools:visibility="gone" />
@@ -33,5 +28,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add" />
+
+
+    <include
+        android:id="@+id/custom_toolbar"
+        layout="@layout/custon_toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

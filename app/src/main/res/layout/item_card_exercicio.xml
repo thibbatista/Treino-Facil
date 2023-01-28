@@ -26,14 +26,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="16dp"
-                android:text="Sample Story Title"
+                android:text="@string/titulo"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_more"
                 app:layout_constraintStart_toEndOf="@+id/card_image"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.23000002" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/obs"
@@ -43,13 +42,12 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="Sample Story Content Description Sample Story Content Description Sample Story Content Description"
+                android:text="@string/descricao"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/titulo"
                 app:layout_constraintStart_toEndOf="@+id/card_image"
-                app:layout_constraintTop_toBottomOf="@+id/titulo"
-                app:layout_constraintVertical_bias="0.17000002" />
+                app:layout_constraintTop_toBottomOf="@+id/titulo"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_more"

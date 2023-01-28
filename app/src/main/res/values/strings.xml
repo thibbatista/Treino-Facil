@@ -23,6 +23,15 @@
     <string name="label_delete">Deletar</string>
     <string name="label_you_dont_have_tasks">Ops! Você não possui nenhum treino cadastrado</string>
     <string name="tv_exercicio">Ops! Você não possui nenhum exercicio cadastrado</string>
+    <string name="meus_exercicios">meus exercicios</string>
+    <string name="meus_treinos">meus treinos</string>
+    <string name="todos_exercicios">todos exercicios</string>
+    <string name="adicione_treino">adicione um treino</string>
+    <string name="gravar_exercicio">Gravar Exercício</string>
+    <string name="titulo">Titulo</string>
+    <string name="descricao">descrição</string>
+    <string name="date">10/01/2023 18:03</string>
+    <string name="number">1</string>
 
 
 </resources>

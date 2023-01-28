@@ -70,64 +70,17 @@ class LIstExercicios : AppCompatActivity() {
             }
         }
 
-
-        // setText tollBar
-        binding.customToolbar.tvToolbar.text = "todos exercicios"
-
-
-        //signOut
-        binding.customToolbar.btnLogout.setOnClickListener {
-            auth.signOut()
-            val intent = Intent(this, FormLogin::class.java)
-            startActivity(intent)
-            finish()
-            true
+        if (documentId != null) {
+            insertListeners(documentId)
         }
 
-
-        //grava no firestore na colecao exercicios do item treino do usuário
-        binding.btnGravar.setOnClickListener {
-
-            // grava apenas o id do exercicio ex: abdominal
-            for (i in listAddExercicios) {
-
-                val usuariosMap = hashMapOf(
-                    "nome" to i)
-
-                if (documentId != null) {
-                    userId?.let { it1 ->
-                        db.collection("users").document(it1.uid).collection("treinos")
-                            .document(documentId).collection("exercicios")
-                            .add(usuariosMap)
-                            .addOnSuccessListener { documentReference ->
-                                Log.d(
-                                    "db",
-                                    "DocumentSnapshot added with ID: ${documentReference.id}"
-                                )
-                            }
-                            .addOnFailureListener { e ->
-                                Log.w("db", "Error adding document", e)
-                            }
-                    }
-                }
-            }
-
-            val intent = Intent(this, MeusExercicios::class.java)
-            intent.putExtra("treino", documentId)
-            startActivity(intent)
-            finish()
-        }
-
-        // btn cancel
-        binding.btnCancel.setOnClickListener {
-            val intent = Intent(this, MeusExercicios::class.java)
-            intent.putExtra("treino", documentId)
-            startActivity(intent)
-            finish()
-        }
+        getDb()
 
 
-        // lista todos os exercicios geral
+    }
+
+    // lista todos os exercicios geral
+    private fun getDb(){
         db.collection("exercicios")
             .get()
             .addOnSuccessListener { result ->
@@ -143,5 +96,59 @@ class LIstExercicios : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.w("db", "Error getting documents.", exception)
             }
+    }
+
+    //eventos de click
+    private fun insertListeners(documentId: String){
+
+        // setText tollBar
+        binding.customToolbar.tvToolbar.text = getString(R.string.todos_exercicios)
+
+        //signOut
+        binding.customToolbar.btnLogout.setOnClickListener {
+            auth.signOut()
+            val intent = Intent(this, FormLogin::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        // btn cancel
+        binding.btnCancel.setOnClickListener {
+            val intent = Intent(this, MeusExercicios::class.java)
+            intent.putExtra("treino", documentId)
+            startActivity(intent)
+            finish()
+        }
+
+        //grava no firestore na colecao exercicios do item treino do usuário
+        binding.btnGravar.setOnClickListener {
+
+            // grava apenas o id do exercicio ex: abdominal
+            for (i in listAddExercicios) {
+
+                val usuariosMap = hashMapOf(
+                    "nome" to i)
+
+                userId?.let { it1 ->
+                    db.collection("users").document(it1.uid).collection("treinos")
+                        .document(documentId).collection("exercicios")
+                        .add(usuariosMap)
+                        .addOnSuccessListener { documentReference ->
+                            Log.d(
+                                "db",
+                                "DocumentSnapshot added with ID: ${documentReference.id}"
+                            )
+                        }
+                        .addOnFailureListener { e ->
+                            Log.w("db", "Error adding document", e)
+                        }
+                }
+            }
+
+            val intent = Intent(this, MeusExercicios::class.java)
+            intent.putExtra("treino", documentId)
+            startActivity(intent)
+            finish()
+        }
     }
 }

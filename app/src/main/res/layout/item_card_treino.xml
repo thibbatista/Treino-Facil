@@ -18,22 +18,21 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="5dp">
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginStart="16dp"
-                android:text="Sample Story Title"
+                android:text="@string/titulo"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/circle_number"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.23000002" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/tv_descricao"
@@ -44,13 +43,11 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:maxLength="23"
-                android:text="Sample Story Content Description"
+                android:text="@string/descricao"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/circle_number"
-                app:layout_constraintTop_toBottomOf="@+id/tv_title"
-                app:layout_constraintVertical_bias="0.17000002" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_title"/>
 
             <TextView
                 android:id="@+id/tv_date"
@@ -61,7 +58,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:maxLength="23"
-                android:text="10/01/2023 18:03"
+                android:text="@string/date"
                 android:textColor="@color/purple_500"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -82,10 +79,9 @@
                 android:id="@+id/circle_number"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="8dp"
                 app:cardBackgroundColor="#FF5722"
                 app:cardCornerRadius="60dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -98,12 +94,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:padding="10dp"
-                        android:text="1"
+                        android:text="@string/number"
                         android:textColor="#fff"
                         android:textSize="30sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.51"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
